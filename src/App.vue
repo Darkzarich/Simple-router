@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>My blog - {{currentPage}}</h3>
+    <h3>My blog - {{dataCurrentPage}}</h3>
     <hr>
     <nav-bar v-on:page-update="updatePage()"/>
     <hr>
-    <component :is="currentPage"></component>
+    <component :is="dataCurrentPage"></component>
   </div>
 </template>
 
@@ -29,9 +29,14 @@ export default {
     About,
   },
   props: ['current-page'],
+  data() {
+    return {
+      dataCurrentPage: this.currentPage,
+    };
+  },
   methods: {
     updatePage() {
-      this.currentPage = routes[window.location.pathname];
+      this.dataCurrentPage = routes[window.location.pathname];
     },
   },
 };
