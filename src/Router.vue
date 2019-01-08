@@ -1,5 +1,5 @@
 <template>
-  <App :current-page="Home"/>
+  <App :current-page="viewComponent"/>
 </template>
 
 <script>
@@ -13,10 +13,14 @@ export default {
   },
   data() {
     return {
-      currentRoute: window.location.pathname,
+      currentRoute: window.location.pathname.toLocaleLowerCase(),
     };
   },
-
+  computed: {
+    viewComponent() {
+      return routes[this.currentRoute] || 'NotFound';
+    },
+  },
 };
 </script>
 

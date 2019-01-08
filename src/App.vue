@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h3>My app</h3>
+    <h3>My app - {{currentPage}}</h3>
     <hr>
-    <div :is="currentPage"></div>
+    <component :is="currentPage"></component>
   </div>
 </template>
 
 <script>
-import Page1 from './components/Page-1';
-import NotFound from './components/NotFound';
-import Home from './components/Home';
-import About from './components/About';
+import Page1 from './components/pages/Page-1';
+import NotFound from './components/pages/NotFound';
+import Home from './components/pages/Home';
+import About from './components/pages/About';
 
 export default {
   name: 'App',
