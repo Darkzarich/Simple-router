@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       currentRoute: window.location.pathname.toLocaleLowerCase(),
+      links: routes,
     };
   },
   computed: {

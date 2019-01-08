@@ -1,15 +1,10 @@
 <template>
-  <div>2</div>
+  <div>Some page</div>
 </template>
 
 <script>
 export default {
   name: 'Page-1',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-    };
-  },
 };
 </script>
 
