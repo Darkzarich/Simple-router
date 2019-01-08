@@ -1,28 +1,29 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+  <div>
+    <h3>My app</h3>
+    <hr>
+    <div :is="currentPage"></div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Page1 from './components/Page-1';
+import NotFound from './components/NotFound';
+import Home from './components/Home';
+import About from './components/About';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Page1,
+    NotFound,
+    Home,
+    About,
   },
+  props: ['current-page'],
 };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
