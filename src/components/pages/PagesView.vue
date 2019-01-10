@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <div v-for="page in pages" :key="page.id">
-      <h3>{{page.title}}</h3>
-      <q>{{page.body}}</q>
-      <hr>
+  <div class="row">
+    <div v-for="page in pages" :key="page.id" class="col-12 col-md-3">
+      <div>
+        <h3>{{page.title}}</h3>
+        <q>{{page.body}}</q>
+        <hr>
+      </div>
     </div>
   </div>
 </template>

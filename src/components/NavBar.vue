@@ -17,6 +17,7 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="sass" scoped>
+div
+  display: inline-block
 </style>

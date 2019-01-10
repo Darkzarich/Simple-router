@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h2>My blog - {{dataCurrentPage}}</h2>
-    <hr>
+  <div class="container bg-white">
+    <h2 class="mr-4" style="display: inline">My blog</h2>
     <nav-bar v-on:page-update="updatePage()"/>
     <hr>
     <component :is="dataCurrentPage"></component>
