@@ -1,9 +1,12 @@
 <template>
-  <div class="container bg-white">
-    <h2 class="mr-4" style="display: inline">My blog</h2>
-    <nav-bar v-on:page-update="updatePage()"/>
-    <hr>
-    <component :is="dataCurrentPage"></component>
+  <div>
+    <nav class="navbar bg-light">
+      <h2 class="navbar-brand" style="display: inline">My blog</h2>
+      <nav-bar v-on:page-update="updatePage()" :active="dataCurrentPage"/>
+    </nav>
+    <div class="container bg-white mt-3 p-2">
+      <component :is="dataCurrentPage"></component>
+    </div>
   </div>
 </template>
 
