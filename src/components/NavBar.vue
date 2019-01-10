@@ -2,7 +2,7 @@
 <div>
   <nav-link href="/"> Home </nav-link>
   <nav-link href="/about"> About</nav-link>
-  <nav-link href="/page-1"> Page </nav-link>
+  <nav-link href="/pages"> Pages </nav-link>
 </div>
 </template>
 

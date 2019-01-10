@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>My blog - {{dataCurrentPage}}</h3>
+    <h2>My blog - {{dataCurrentPage}}</h2>
     <hr>
     <nav-bar v-on:page-update="updatePage()"/>
     <hr>
@@ -13,7 +13,7 @@ import NavBar from './components/NavBar';
 import routes from './routes';
 
 // Pages
-import Page1 from './components/pages/Page-1';
+import PagesView from './components/pages/PagesView';
 import NotFound from './components/pages/NotFound';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
@@ -23,7 +23,7 @@ export default {
   components: {
     NavBar,
     // Pages
-    Page1,
+    PagesView,
     NotFound,
     Home,
     About,
