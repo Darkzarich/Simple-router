@@ -3,8 +3,8 @@
     <div class="row">
       <div v-for="page in pages" :key="page.id" class="col-12 col-md-3">
         <div>
-          <h3>{{page.data.id}} ) {{page.data.title}}</h3>
-          <q>{{page.data.body}}</q>
+          <h3>{{page.id}} ) {{page.title}}</h3>
+          <q>{{page.body}}</q>
           <hr>
         </div>
       </div>
@@ -35,15 +35,11 @@ export default {
   },
   methods: {
     getPages() {
-      const promises = [];
-      for (let i = ((this.currentPage - 1) * this.perPage) + 1;
-        i < ((this.currentPage - 1) * this.perPage) + this.perPage + 1
-        && i <= this.totalRows; i += 1) {
-        promises.push(axios.get(`https://jsonplaceholder.typicode.com/posts/${i}`));
-      }
-      Promise.all(promises).then((values) => {
-        this.pages = values;
-      });
+      axios
+        .get(`https://jsonplaceholder.typicode.com/posts?_page=${this.currentPage}&_limit=${this.perPage}`)
+        .then((response) => {
+          this.pages = response.data;
+        });
     },
   },
 };
