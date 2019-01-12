@@ -2,7 +2,7 @@
 <div class="nav navbar-nav mr-auto mt-2 mt-lg-0" :class="activeLowerCase">
   <nav-link class="home nav-item" href="/"> Home </nav-link>
   <nav-link class="about nav-item" href="/about"> About</nav-link>
-  <nav-link class="pagesview nav-item" href="/pages"> Pages </nav-link>
+  <nav-link class="posts nav-item" href="/posts"> Posts </nav-link>
 </div>
 </template>
 
@@ -30,7 +30,7 @@ div
 
 .nav.home .home,
 .nav.about .about,
-.nav.pagesview .pagesview
+.nav.posts .posts
   font-weight: bold
   display: inline-block
   height: 100%

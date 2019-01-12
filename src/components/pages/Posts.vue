@@ -31,10 +31,10 @@ export default {
     };
   },
   created() {
-    this.getPages();
+    this.getPosts();
   },
   methods: {
-    getPages() {
+    getPosts() {
       axios
         .get(`https://jsonplaceholder.typicode.com/posts?_page=${this.currentPage}&_limit=${this.perPage}`)
         .then((response) => {

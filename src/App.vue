@@ -15,7 +15,7 @@ import NavBar from './components/NavBar';
 import routes from './routes';
 
 // Pages
-import PagesView from './components/pages/PagesView';
+import Posts from './components/pages/Posts';
 import NotFound from './components/pages/NotFound';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
@@ -24,8 +24,8 @@ export default {
   name: 'App',
   components: {
     NavBar,
-    // Pages
-    PagesView,
+    // list of pages
+    Posts,
     NotFound,
     Home,
     About,
