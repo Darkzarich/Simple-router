@@ -5,7 +5,9 @@
       <nav-bar v-on:page-update="updatePage()" :active="dataCurrentPage"/>
     </nav>
     <div class="container bg-white mt-3 p-2">
-      <component :is="dataCurrentPage"></component>
+      <component :is="dataCurrentPage" v-on:page-update="updatePage"
+                 @on-error="onError()">
+      </component>
     </div>
   </div>
 </template>
@@ -19,6 +21,7 @@ import Posts from './components/pages/Posts';
 import NotFound from './components/pages/NotFound';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
+import SinglePost from './components/pages/SinglePost';
 
 export default {
   name: 'App',
@@ -29,6 +32,7 @@ export default {
     NotFound,
     Home,
     About,
+    SinglePost,
   },
   props: ['current-page'],
   data() {
@@ -38,7 +42,14 @@ export default {
   },
   methods: {
     updatePage() {
-      this.dataCurrentPage = routes[window.location.pathname];
+      if (window.location.pathname.indexOf('/post/') !== -1) {
+        this.dataCurrentPage = 'SinglePost';
+      } else {
+        this.dataCurrentPage = routes[window.location.pathname];
+      }
+    },
+    onError() {
+      this.dataCurrentPage = 'NotFound';
     },
   },
 };

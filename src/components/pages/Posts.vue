@@ -3,7 +3,9 @@
     <div class="row">
       <div v-for="page in pages" :key="page.id" class="col-12 col-md-3">
         <div>
-          <h3>{{page.id}} ) {{page.title}}</h3>
+          <v-link :href="'/post/' + page.id">
+            <h3>{{page.id}} ) {{page.title}}</h3>
+          </v-link>
           <q>{{page.body}}</q>
           <hr>
         </div>
@@ -11,7 +13,7 @@
     </div>
     <div class="row">
       <b-pagination class="col-12" align="center" size="md" :total-rows="totalRows"
-                    @input="getPages" v-model="currentPage" :per-page="perPage">
+                    @input="getPosts" v-model="currentPage" :per-page="perPage">
       </b-pagination>
     </div>
   </div>
@@ -19,9 +21,13 @@
 
 <script>
 import axios from 'axios';
+import NavLink from '../NavLink';
 
 export default {
-  name: 'PagesView',
+  name: 'Posts',
+  components: {
+    'v-link': NavLink,
+  },
   data() {
     return {
       pages: [],
@@ -45,7 +51,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

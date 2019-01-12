@@ -15,6 +15,7 @@ export default {
       e.preventDefault();
       history.pushState(null, this.$slots.default[0].text, this.href);
       this.$parent.$emit('page-update');
+      this.$emit('page-update');
     },
   },
 };
