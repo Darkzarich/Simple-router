@@ -50,7 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/Simple-router/',
+    assetsPublicPath: 'https://darkzarich.github.io/Simple-router/',
 
     /**
      * Source Maps
