@@ -63,5 +63,5 @@ export default {
 
 <style lang="sass" scoped>
   .explanation
-    color: deepskyblue
+    color: var(--blue)
 </style>
