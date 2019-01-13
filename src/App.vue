@@ -40,6 +40,12 @@ export default {
       dataCurrentPage: this.currentPage,
     };
   },
+  mounted() {
+    // popstate happens when back button is pressed
+    window.addEventListener('popstate', () => {
+      this.updatePage();
+    });
+  },
   methods: {
     updatePage() {
       if (window.location.pathname.indexOf('/post/') !== -1) {

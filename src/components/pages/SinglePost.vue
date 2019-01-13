@@ -25,9 +25,6 @@ export default {
     };
   },
   beforeCreate() {
-    /* eslint-disable no-console */
-    /* eslint-disable no-alert */
-
     axios
       .get(window.location.pathname.toLowerCase().replace(
         /\/post\/(.+)/,
@@ -39,7 +36,6 @@ export default {
           'apiKey=e217204f2c0d42cca5708d70b60f1fd4'))
       .then((response) => {
         this.post = response.data.articles[0];
-        console.log(response);
       })
       .catch(() => {
         this.onError();
