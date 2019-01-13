@@ -18,6 +18,8 @@
       <b-pagination class="col-12" align="center" size="md" :total-rows="totalRows"
                     @input="getPosts" v-model="currentPage" :per-page="perPage">
       </b-pagination>
+      <br>
+      <span class="attribution col-12 text-center">API for news powered by <a href="https://newsapi.org">newsapi.org</a></span>
     </div>
   </div>
 </template>
@@ -89,6 +91,7 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="sass" scoped>
+.attribution
+  font-size: 12px
 </style>
