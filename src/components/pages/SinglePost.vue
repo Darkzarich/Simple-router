@@ -6,8 +6,18 @@
           <img class="img-fluid" :src="post.urlToImage">
           <h2>{{post.title}}</h2>
           <hr>
-          <div class="ml-3">{{post.content}}</div>
-          <hr>
+          <div class="ml-3">
+            {{post.content}}
+            <span class="explanation">
+              <i class="far fa-question-circle" id="explanation"></i>
+            </span>
+            <b-tooltip target="explanation">
+              This site uses free developer plan for News API.
+              Article content can be shown only up to 250 characters and
+              remain ones will be shown as [+243 chars] for example. Please understand.
+            </b-tooltip>
+            <br><div class="mt-2">Source: <a :href="post.url">{{post.source.name}}</a></div>
+          </div>
         </div>
       </div>
     </div>
@@ -16,6 +26,8 @@
 
 <script>
 import axios from 'axios';
+import '@fortawesome/fontawesome-free/css/regular.min.css';
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 
 export default {
   name: 'SinglePost',
@@ -49,6 +61,7 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="sass" scoped>
+  .explanation
+    color: deepskyblue
 </style>
