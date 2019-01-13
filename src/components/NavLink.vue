@@ -13,15 +13,7 @@ export default {
   methods: {
     go(e) {
       e.preventDefault();
-
-      history.pushState({ dataCurrentPage: this.$parent.dataCurrentPage ||
-          this.$parent.$parent.dataCurrentPage },
-      this.$slots.default[0].text, this.href);
-
-      /* eslint-disable no-console */
-      console.log(this.$parent.dataCurrentPage ||
-      this.$parent.$parent.dataCurrentPage);
-
+      history.pushState(null, this.$slots.default[0].text, this.href);
       this.$parent.$emit('page-update');
       this.$emit('page-update');
     },
