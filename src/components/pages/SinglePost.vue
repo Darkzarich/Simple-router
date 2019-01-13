@@ -3,9 +3,10 @@
     <div class="row">
       <div class="col-12 col-md-6">
         <div>
-          <h2>{{post.id}} ) {{post.title}}</h2>
+          <img class="img-fluid" :src="post.urlToImage">
+          <h2>{{post.title}}</h2>
           <hr>
-          <div class="ml-3">{{post.body}}</div>
+          <div class="ml-3">{{post.content}}</div>
           <hr>
         </div>
       </div>
@@ -24,12 +25,21 @@ export default {
     };
   },
   beforeCreate() {
+    /* eslint-disable no-console */
+    /* eslint-disable no-alert */
+
     axios
       .get(window.location.pathname.toLowerCase().replace(
-        /\/post\/([0-9a-zA-Z]+)/,
-        'https://jsonplaceholder.typicode.com/posts/$1'))
+        /\/post\/(.+)/,
+        'https://newsapi.org/v2/everything?' +
+          'q=$1&' +
+          'sources=abc-news&' +
+          'language=en&' +
+          'sortBy=publishedAt&' +
+          'apiKey=e217204f2c0d42cca5708d70b60f1fd4'))
       .then((response) => {
-        this.post = response.data;
+        this.post = response.data.articles[0];
+        console.log(response);
       })
       .catch(() => {
         this.onError();

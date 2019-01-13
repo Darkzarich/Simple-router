@@ -1,12 +1,15 @@
 <template>
   <div>
     <div class="row">
-      <div v-for="page in pages" :key="page.id" class="col-12 col-md-3">
+      <div v-for="post in posts" :key="post.url" class="col-12 col-md-3">
         <div>
-          <v-link :href="'/post/' + page.id">
-            <h3>{{page.id}} ) {{page.title}}</h3>
+          <v-link :href="'/post/' + post.title">
+            <img class="img-fluid" :src="post.urlToImage">
+            <h5>{{post.title}}</h5>
           </v-link>
-          <q>{{page.body}}</q>
+          <q>{{post.description}}</q>
+          <hr>
+          {{post.publishedAt | formatDate}}
           <hr>
         </div>
       </div>
@@ -30,22 +33,57 @@ export default {
   },
   data() {
     return {
-      pages: [],
+      posts: [],
       currentPage: 1,
       perPage: 12,
       totalRows: 100,
     };
   },
   created() {
+    axios
+      .get('https://newsapi.org/v2/everything?' +
+        'sources=abc-news&' +
+        'language=en&' +
+        'sortBy=publishedAt&' +
+        'apiKey=e217204f2c0d42cca5708d70b60f1fd4')
+      .then((response) => {
+        this.totalRows = response.data.totalResults;
+      })
+      .catch(() => {
+        this.emit('on-error');
+      });
     this.getPosts();
   },
   methods: {
     getPosts() {
       axios
-        .get(`https://jsonplaceholder.typicode.com/posts?_page=${this.currentPage}&_limit=${this.perPage}`)
+        .get('https://newsapi.org/v2/everything?' +
+          'sources=abc-news&' +
+          'language=en&' +
+          'sortBy=publishedAt&' +
+          'apiKey=e217204f2c0d42cca5708d70b60f1fd4&' +
+          `pageSize=${this.perPage}&` +
+          `page=${this.currentPage}`)
         .then((response) => {
-          this.pages = response.data;
+          this.posts = response.data.articles;
+        })
+        .catch(() => {
+          this.emit('on-error');
         });
+    },
+  },
+  filters: {
+    formatDate(date) {
+      const formatedDate = new Date(Date.parse(date));
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      };
+
+      return formatedDate.toLocaleDateString('en-US', options);
     },
   },
 };
