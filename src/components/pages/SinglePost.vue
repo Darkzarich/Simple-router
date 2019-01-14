@@ -28,6 +28,7 @@
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/regular.min.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import config from '../../config';
 
 export default {
   name: 'SinglePost',
@@ -38,7 +39,7 @@ export default {
   },
   beforeCreate() {
     axios
-      .get(window.location.pathname.toLowerCase().replace(
+      .get(window.location.pathname.replace(config.baseURL, '').toLowerCase().replace(
         /\/post\/(.+)/,
         'https://newsapi.org/v2/everything?' +
           'q=$1&' +

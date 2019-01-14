@@ -15,6 +15,7 @@
 <script>
 import NavBar from './components/NavBar';
 import routes from './routes';
+import config from './config';
 
 // Pages
 import Posts from './components/pages/Posts';
@@ -48,10 +49,12 @@ export default {
   },
   methods: {
     updatePage() {
-      if (window.location.pathname.indexOf('/post/') !== -1) {
+      const curURL = window.location.pathname.replace(config.baseURL, '');
+
+      if (curURL.search(/post\/.+/) !== -1) {
         this.dataCurrentPage = 'SinglePost';
       } else {
-        this.dataCurrentPage = routes[window.location.pathname];
+        this.dataCurrentPage = routes[curURL];
       }
     },
     onError() {

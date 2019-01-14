@@ -5,6 +5,7 @@
 <script>
 import App from './App';
 import routes from './routes';
+import config from './config';
 
 export default {
   name: 'Router',
@@ -13,13 +14,13 @@ export default {
   },
   data() {
     return {
-      currentRoute: window.location.pathname.toLocaleLowerCase(),
+      currentRoute: window.location.pathname.replace(config.baseURL, '').toLocaleLowerCase(),
       links: routes,
     };
   },
   computed: {
     viewComponent() {
-      if (this.currentRoute.indexOf('/post/') !== -1) {
+      if (this.currentRoute.indexOf('/post') !== -1) {
         return 'SinglePost';
       }
 
