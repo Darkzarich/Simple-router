@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     viewComponent() {
-      if (this.currentRoute.indexOf('/post') !== -1) {
+      if (this.currentRoute.search(/post\/.+/) !== -1) {
         return 'SinglePost';
       }
 
