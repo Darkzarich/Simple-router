@@ -50,7 +50,6 @@ export default {
           'q=$1&' +
           'sources=abc-news&' +
           'language=en&' +
-          'sortBy=publishedAt&' +
           'apiKey=e217204f2c0d42cca5708d70b60f1fd4'))
       .then((response) => {
         this.post = response.data.articles[0];
