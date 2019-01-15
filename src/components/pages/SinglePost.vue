@@ -4,14 +4,25 @@
       <div class="col-12 col-md-6">
         <div>
           <img class="img-fluid" :src="post.urlToImage">
-          <h2>{{post.title}}</h2>
+          <h2>
+            <template v-if="isVideo">
+              <span class="explanation">
+                <i class="far fa-question-circle" id="explanationVideo"></i>
+              </span>
+              <b-tooltip target="explanationVideo">
+                API can't return a video so if you want to watch the video which was
+                attached to the article you have to follow the source.
+              </b-tooltip>
+            </template>
+            {{post.title}}
+          </h2>
           <hr>
           <div class="ml-3">
             {{post.content}}
             <span class="explanation">
-              <i class="far fa-question-circle" id="explanation"></i>
+              <i class="far fa-question-circle" id="explanationChar"></i>
             </span>
-            <b-tooltip target="explanation">
+            <b-tooltip target="explanationChar">
               This site uses free developer plan for News API.
               Article content can be shown only up to 250 characters and
               remain ones will be shown as [+243 chars] for example. Please understand.
@@ -40,6 +51,7 @@ export default {
   data() {
     return {
       post: null,
+      isVideo: false,
     };
   },
   beforeCreate() {
@@ -53,6 +65,9 @@ export default {
           'apiKey=e217204f2c0d42cca5708d70b60f1fd4'))
       .then((response) => {
         this.post = response.data.articles[0];
+        if (response.data.articles[0].title.indexOf('WATCH') !== -1) {
+          this.isVideo = true;
+        }
       })
       .catch(() => {
         this.onError();
