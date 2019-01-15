@@ -17,6 +17,11 @@
               remain ones will be shown as [+243 chars] for example. Please understand.
             </b-tooltip>
             <br><div class="mt-2">Source: <a :href="post.url">{{post.source.name}}</a></div>
+            <div>
+              <button type="button" onclick="history.back()" class="btn btn-primary btn-sm">
+                Back
+              </button>
+            </div>
           </div>
         </div>
       </div>
