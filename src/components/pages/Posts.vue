@@ -1,16 +1,27 @@
 <template>
-  <div>
+  <div class="mx-2">
     <div class="row">
-      <div v-for="post in posts" :key="post.url" class="col-12 col-md-3">
-        <div>
+      <b-pagination class="col-12" align="center" size="md" :total-rows="totalRows"
+                    @input="getPosts" v-model="currentPage" :per-page="perPage">
+      </b-pagination>
+    </div>
+    <div class="row">
+      <div v-for="post in posts" :key="post.url" class="col-12 col-md-3 mb-3">
+        <div class="card h-100">
           <v-link :href="'/post/' + post.title">
-            <img class="img-fluid" :src="post.urlToImage">
-            <h5>{{post.title}}</h5>
+            <img class="card-img-top" :src="post.urlToImage ? post.urlToImage : noImgURL">
           </v-link>
-          <q>{{post.description}}</q>
-          <hr>
-          {{post.publishedAt | formatDate}}
-          <hr>
+          <div class="card-body">
+            <v-link :href="'/post/' + post.title">
+              <h5 class="card-title">{{post.title}}</h5>
+            </v-link>
+            <p class="card-text">
+              {{post.description}}
+            </p>
+          </div>
+          <div class="card-footer">
+            {{post.publishedAt | formatDate}}
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +38,7 @@
 <script>
 import axios from 'axios';
 import NavLink from '../NavLink';
+import config from '../../config';
 
 export default {
   name: 'Posts',
@@ -39,6 +51,7 @@ export default {
       currentPage: 1,
       perPage: 12,
       totalRows: 100,
+      noImgURL: config.noImgURL,
     };
   },
   created() {
