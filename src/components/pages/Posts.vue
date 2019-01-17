@@ -6,7 +6,8 @@
       </b-pagination>
     </div>
     <div class="row">
-      <div v-for="post in posts" :key="post.url" class="col-12 col-md-3 mb-3">
+      <div v-if="isLoading" class="text-center col-12 m-3 loading">It's loading</div>
+      <div v-else v-for="post in posts" :key="post.url" class="col-12 col-md-3 mb-3">
         <div class="card h-100">
           <v-link :href="'/post/' + post.title">
             <img class="card-img-top" :src="post.urlToImage ? post.urlToImage : noImgURL">
@@ -52,6 +53,7 @@ export default {
       perPage: 12,
       totalRows: 100,
       noImgURL: config.noImgURL,
+      isLoading: true,
     };
   },
   created() {
@@ -63,6 +65,7 @@ export default {
         'apiKey=e217204f2c0d42cca5708d70b60f1fd4')
       .then((response) => {
         this.totalRows = response.data.totalResults;
+        this.isLoading = false;
       })
       .catch(() => {
         this.emit('on-error');
@@ -71,6 +74,7 @@ export default {
   },
   methods: {
     getPosts() {
+      this.isLoading = true;
       axios
         .get('https://newsapi.org/v2/everything?' +
           'sources=abc-news&' +
@@ -81,6 +85,7 @@ export default {
           `page=${this.currentPage}`)
         .then((response) => {
           this.posts = response.data.articles;
+          this.isLoading = false;
         })
         .catch(() => {
           this.emit('on-error');
@@ -105,6 +110,20 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.attribution
-  font-size: 12px
+  .attribution
+    font-size: 12px
+
+  .loading:after
+    display: inline
+    content: ''
+    animation: loading 0.5s linear 0s infinite
+
+  @keyframes loading
+    0%
+      content: '.'
+    50%
+      content: '..'
+    100%
+      content: '...'
+
 </style>
