@@ -7,21 +7,21 @@
     </div>
     <div class="row">
       <div v-if="isLoading" class="text-center col-12 m-3 loading">It's loading</div>
-      <div v-else v-for="post in posts" :key="post.url" class="col-12 col-md-3 mb-3">
+      <div v-else v-for="post in posts" :key="post.web_url" class="col-12 col-md-3 mb-3">
         <div class="card h-100">
-          <v-link :href="'/post/' + post.title">
-            <img class="card-img-top" :src="post.urlToImage ? post.urlToImage : noImgURL">
+          <v-link :href="'/post/' + post.headline.main">
+            <img class="card-img-top" :src="getImageSrc(post)">
           </v-link>
           <div class="card-body">
-            <v-link :href="'/post/' + post.title">
-              <h5 class="card-title">{{post.title}}</h5>
+            <v-link :href="'/post/' + post.headline.main">
+              <h5 class="card-title">{{post.headline.main}}</h5>
             </v-link>
             <p class="card-text">
-              {{post.description}}
+              {{post.abstract}}
             </p>
           </div>
           <div class="card-footer">
-            {{post.publishedAt | formatDate}}
+            {{post.pub_date | formatDate}}
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
                     @input="getPosts" v-model="currentPage" :per-page="perPage">
       </b-pagination>
       <br>
-      <span class="attribution col-12 text-center">API for news powered by <a href="https://newsapi.org">newsapi.org</a></span>
+      <span class="attribution col-12 text-center">API for news powered by <a href="https://developer.nytimes.com/">developer.nytimes.com</a></span>
     </div>
   </div>
 </template>
@@ -52,44 +52,28 @@ export default {
       currentPage: 1,
       perPage: 12,
       totalRows: 100,
-      noImgURL: config.noImgURL,
       isLoading: true,
     };
   },
   created() {
+    const currentDate = new Date();
+
     axios
-      .get('https://newsapi.org/v2/everything?' +
-        'sources=abc-news&' +
-        'language=en&' +
-        'sortBy=publishedAt&' +
-        'apiKey=e217204f2c0d42cca5708d70b60f1fd4')
-      .then((response) => {
-        this.totalRows = response.data.totalResults;
+      .get(`https://api.nytimes.com/svc/archive/v1/
+        ${currentDate.getFullYear}/${currentDate.getMonth() + 1}.json?api-key=n0YNVbv80LUtv4UTIDznP0um0hLQeO4z`)
+      .then((res) => {
+        this.totalRows = Math.floor(res.response.docs.length / this.perPage);
+        this.posts = res.response.docs;
         this.isLoading = false;
       })
       .catch(() => {
         this.emit('on-error');
       });
-    this.getPosts();
   },
   methods: {
-    getPosts() {
-      this.isLoading = true;
-      axios
-        .get('https://newsapi.org/v2/everything?' +
-          'sources=abc-news&' +
-          'language=en&' +
-          'sortBy=publishedAt&' +
-          'apiKey=e217204f2c0d42cca5708d70b60f1fd4&' +
-          `pageSize=${this.perPage}&` +
-          `page=${this.currentPage}`)
-        .then((response) => {
-          this.posts = response.data.articles;
-          this.isLoading = false;
-        })
-        .catch(() => {
-          this.emit('on-error');
-        });
+    getImageSrc(post) {
+      const thumbnail = post.multimedia.find(m => m.subtype === 'thumbLarge');
+      return thumbnail ? `https://www.nytimes.com/${thumbnail.url}` : config.noImgURL;
     },
   },
   filters: {
