@@ -1,34 +1,40 @@
 <template>
   <div class="mx-2">
     <div class="row">
-      <b-pagination class="col-12" align="center" size="md" :total-rows="totalRows"
-                    @input="getPosts" v-model="currentPage" :per-page="perPage">
+      <b-pagination
+        class="col-12"
+        align="center"
+        size="md"
+        :total-rows="totalRows"
+        v-model="page"
+        :per-page="perPage"
+      >
       </b-pagination>
     </div>
     <div class="row">
-      <div v-if="isLoading" class="text-center col-12 m-3 loading">It's loading</div>
-      <div v-else v-for="post in posts" :key="post.web_url" class="col-12 col-md-3 mb-3">
+      <div v-if="loading" class="text-center col-12 m-3 loading">It's loading</div>
+      <div v-else v-for="(post, index) in postsByPage" :key="index" class="col-12 col-md-3 mb-3">
         <div class="card h-100">
-          <v-link :href="'/post/' + post.headline.main">
+          <v-link :href="'/post/' + post.title">
             <img class="card-img-top" :src="getImageSrc(post)">
           </v-link>
           <div class="card-body">
-            <v-link :href="'/post/' + post.headline.main">
-              <h5 class="card-title">{{post.headline.main}}</h5>
+            <v-link :href="'/post/' + post.title">
+              <h5 class="card-title">{{post.title}}</h5>
             </v-link>
             <p class="card-text">
-              {{post.abstract}}
+              {{post.description.slice(0, 60) + '...'}}
             </p>
           </div>
           <div class="card-footer">
-            {{post.pub_date | formatDate}}
+            {{post.published_at | formatDate}}
           </div>
         </div>
       </div>
     </div>
     <div class="row">
       <b-pagination class="col-12" align="center" size="md" :total-rows="totalRows"
-                    @input="getPosts" v-model="currentPage" :per-page="perPage">
+                    v-model="page" :per-page="perPage">
       </b-pagination>
       <br>
       <span class="attribution col-12 text-center">API for news powered by <a href="https://developer.nytimes.com/">developer.nytimes.com</a></span>
@@ -37,7 +43,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapState, mapGetters } from 'vuex';
 import NavLink from '../NavLink';
 import config from '../../config';
 
@@ -48,32 +54,24 @@ export default {
   },
   data() {
     return {
-      posts: [],
-      currentPage: 1,
-      perPage: 12,
-      totalRows: 100,
-      isLoading: true,
+      perPage: config.perPage,
     };
   },
-  created() {
-    const currentDate = new Date();
-
-    axios
-      .get(`https://api.nytimes.com/svc/archive/v1/
-        ${currentDate.getFullYear}/${currentDate.getMonth() + 1}.json?api-key=n0YNVbv80LUtv4UTIDznP0um0hLQeO4z`)
-      .then((res) => {
-        this.totalRows = Math.floor(res.response.docs.length / this.perPage);
-        this.posts = res.response.docs;
-        this.isLoading = false;
-      })
-      .catch(() => {
-        this.emit('on-error');
-      });
+  computed: {
+    ...mapState(['loading', 'totalRows']),
+    ...mapGetters(['postsByPage']),
+    page: {
+      set(val) {
+        this.$store.commit('setPage', val);
+      },
+      get() {
+        return this.$store.state.page;
+      },
+    },
   },
   methods: {
     getImageSrc(post) {
-      const thumbnail = post.multimedia.find(m => m.subtype === 'thumbLarge');
-      return thumbnail ? `https://www.nytimes.com/${thumbnail.url}` : config.noImgURL;
+      return post.image ? post.image : config.noImgURL;
     },
   },
   filters: {

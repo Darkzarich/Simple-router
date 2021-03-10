@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import Router from './Router';
+import store from './store';
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -15,5 +16,6 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   components: { Router },
+  store,
   template: '<Router/>',
 });

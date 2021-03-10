@@ -46,6 +46,8 @@ export default {
     window.addEventListener('popstate', () => {
       this.updatePage();
     });
+
+    this.$store.dispatch('getPosts');
   },
   methods: {
     updatePage() {
