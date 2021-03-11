@@ -1,6 +1,6 @@
 {
   "name": "simple-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "small SPA made using HTML5 History API and without using Vue-router",
   "author": "Dark_zarich <darkzarichv2@gmail.com>",

@@ -37,7 +37,7 @@
                     v-model="page" :per-page="perPage">
       </b-pagination>
       <br>
-      <span class="attribution col-12 text-center">API for news powered by <a href="https://developer.nytimes.com/">developer.nytimes.com</a></span>
+      <span class="attribution col-12 text-center">API for news powered by <a href="https://mediastack.com/">mediastack.com</a></span>
     </div>
   </div>
 </template>
